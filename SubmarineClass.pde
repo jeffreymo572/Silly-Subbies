@@ -44,6 +44,12 @@ class Submarine {
   void down() {
     y += speed;
   }
+  void backward(){
+   x -= speed;   
+  }
+  void forward(){
+   x += speed;   
+  }
   
   boolean hits(Octopus octopus) {
     // Needs work

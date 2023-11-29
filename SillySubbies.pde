@@ -43,6 +43,20 @@ void keyPressed() {
       controlScreen = false;
     }
   }
+  if (key == 'w'){
+   submarine.up();
+  }
+  if (key == 's'){
+   submarine.down();   
+  }
+  if (key == 'a'){
+   submarine.backward();   
+  }
+  if (key == 'd'){
+   submarine.forward();   
+  }
+
+  
 }
 
 
