@@ -4,7 +4,6 @@ ArrayList<Bullet> bullets;
 ArrayList<Octopus> octopuses;
 int score = 0;
 int level = 1;
-boolean controlScreen = false;
 
 void setup() {
   size(800, 600);
@@ -30,6 +29,27 @@ void draw() {
   }
 }
 
+void displayLevelComplete() {
+  background(0);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  textSize(32);
+  text("Level " + level + " Complete", width/2, height/3);
+  
+  // Go home button
+  fill(0, 255, 0);
+  rect(300, 400, 200, 50);
+  fill(255);
+  textSize(20);
+  text("Go Home", width/2, 425);
+  
+  // Next level button
+  fill(0, 0, 255);
+  rect(300, 500, 200, 50);
+  fill(255);
+  text("Play Next Level", width/2, 525);
+}
+
 void spawnOctopuses() {
   int numOctopuses = level * 5;
   for (int i = 0; i < numOctopuses; i++) {
@@ -38,12 +58,15 @@ void spawnOctopuses() {
 }
 
 void keyPressed() {
-  if (keyCode == ESC) {
-    if (gameState == 0 && controlScreen) {
-      controlScreen = false;
-    }
+  if (keyCode == UP) {
+    submarine.up();
+  } else if (keyCode == DOWN) {
+    submarine.down();
+  } else if (key == ' ') {
+    bullets.add(new Bullet(submarine.x, submarine.y));
   }
 }
+
 
 
 void mousePressed() {
@@ -55,44 +78,11 @@ void mousePressed() {
     }
     // Check if the controls box is clicked
     else if (mouseX > 300 && mouseX < 500 && mouseY > 500 && mouseY < 550) {
-      controlScreen = true;
-    }
-  } else if (gameState == 1) {
-    // Check if the "Go Home" button is clicked
-    if (mouseX > 300 && mouseX < 500 && mouseY > 400 && mouseY < 450) {
-      gameState = 0; // Switch to home screen
-      controlScreen = false; // Ensure controlScreen is false when going home
-    }
-    // Check if the "Play Next Level" button is clicked
-    else if (mouseX > 300 && mouseX < 500 && mouseY > 500 && mouseY < 550) {
-      gameState = 1; // Switch to next level
-      resetGame(); // Initialize or reset game-related variables
-    }
-  } else if (gameState == 2) {
-    // Check if the "Go Home" button is clicked on the game over screen
-    if (mouseX > 300 && mouseX < 500 && mouseY > 400 && mouseY < 450) {
-      gameState = 0; // Switch to home screen
-      controlScreen = false; // Ensure controlScreen is false when going home
-    }
-    // Check if the "Play Next Level" button is clicked on the game over screen
-    else if (mouseX > 300 && mouseX < 500 && mouseY > 500 && mouseY < 550) {
-      gameState = 1; // Switch to next level
-      resetGame(); // Initialize or reset game-related variables
-    }
-  } else if (gameState == 3) {
-    // Check if the "Go Home" button is clicked on the level complete screen
-    if (mouseX > 300 && mouseX < 500 && mouseY > 400 && mouseY < 450) {
-      gameState = 0; // Switch to home screen
-      controlScreen = false; // Ensure controlScreen is false when going home
-    }
-    // Check if the "Play Next Level" button is clicked on the level complete screen
-    else if (mouseX > 300 && mouseX < 500 && mouseY > 500 && mouseY < 550) {
-      gameState = 1; // Switch to next level
-      resetGame(); // Initialize or reset game-related variables
+      gameState = 0; // Stay on home screen
+      displayControls();
     }
   }
 }
-
 
 void displayHomeScreen() {
   background(0);
@@ -116,7 +106,7 @@ void displayHomeScreen() {
 }
 
 void displayControls() {
-  // Display controls information on the control screen
+  // Display controls information on the home screen
   background(0);
   fill(255);
   textAlign(CENTER, CENTER);
@@ -135,7 +125,7 @@ void displayControls() {
 }
 
 void playGame() {
-  background(23, 153, 250);
+  background(0);
   
   submarine.update();
   submarine.display();
@@ -188,29 +178,6 @@ void playGame() {
     }
   }
 }
-
-void displayLevelComplete() {
-  background(0);
-  fill(255);
-  textAlign(CENTER, CENTER);
-  textSize(32);
-  text("Level " + level + " Complete", width/2, height/3);
-  
-  // Go home button
-  fill(0, 255, 0);
-  rect(300, 400, 200, 50);
-  fill(255);
-  textSize(20);
-  text("Go Home", width/2, 425);
-  
-  // Next level button
-  fill(0, 0, 255);
-  rect(300, 500, 200, 50);
-  fill(255);
-  text("Play Next Level", width/2, 525);
-}
-
-
 
 void gameOver() {
   textSize(32);
