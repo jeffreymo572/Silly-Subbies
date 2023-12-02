@@ -18,7 +18,7 @@ class Bullet {
     //fill(255, 0, 0); 
     //ellipse(x, y, 2 * radius, 2 * radius);
     imageMode(CENTER);
-    image(torpedo, x, y, 50, 50);
+    image(torpedo, x, y, 20, 20);
   }
   
   boolean hits(Octopus octopus) {

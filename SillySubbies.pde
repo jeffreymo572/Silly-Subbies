@@ -63,7 +63,7 @@ void keyPressed() {
   } else if (keyCode == DOWN) {
     submarine.down();
   } else if (key == ' ') {
-    bullets.add(new Bullet(submarine.x, submarine.y));
+    bullets.add(new Bullet(submarine.x + 30, submarine.y + 20));
   }
 }
 
@@ -125,10 +125,9 @@ void displayControls() {
 }
 
 void playGame() {
-  background(0);
+  background(18, 182, 255);
   
   submarine.update();
-  submarine.display();
   
   for (int i = bullets.size() - 1; i >= 0; i--) {
     Bullet bullet = bullets.get(i);
@@ -150,6 +149,9 @@ void playGame() {
       bullets.remove(i);
     }
   }
+  
+  // Submarine must be drawn over the bullets
+  submarine.display();
   
   // Update and display octopuses
   for (Octopus octopus : octopuses) {
