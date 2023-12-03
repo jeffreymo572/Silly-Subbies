@@ -49,6 +49,11 @@ class SoundBoard{
       this.death.play();
     }
   }
+  void stopDeath(){
+    if (this.death.isPlaying()){
+      this.death.stop();
+    }
+  }
   
   void playWin(){
     if (!this.win.isPlaying()){
