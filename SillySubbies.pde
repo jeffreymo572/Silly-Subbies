@@ -5,7 +5,6 @@ ArrayList<Octopus> octopuses;
 int score = 0;
 int level = 1;
 String[] highscore;
-
 PImage background;
 
 // player inputs to control submarine: {up,down,left,right,shoot}

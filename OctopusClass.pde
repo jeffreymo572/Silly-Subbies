@@ -18,19 +18,19 @@ class Octopus {
   }
   
   void update() {
-    x -= speed;    
+    x -= speed;
   }
   
   void display() {
     //fill(255, 165, 0); 
     //ellipse(x, y, 2 * radius, 2 * radius);
     imageMode(CENTER);
-    
     if (isRed){
       image(red, x, y, 100, 100);
     } else {
       image(orange, x, y, 70, 70);
     }
+    
   }
   boolean offscreen() {
     return x > width;
