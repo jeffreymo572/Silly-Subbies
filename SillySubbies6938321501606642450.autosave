@@ -212,6 +212,12 @@ void playGame() {
     }
     Gui.displayScore();
 
+    fill(255);
+    textSize(20);
+
+    text("Score: " + score, 50, 30);
+    text("Level: " + level, 50, 60);
+
     // Check if all octopuses are eliminated
     if (octopuses.size() <= 5) {
         // Check if submarine reached the end
