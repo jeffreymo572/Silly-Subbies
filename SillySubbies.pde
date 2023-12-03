@@ -6,8 +6,8 @@ int score = 0;
 int level = 1;
 String[] highscore;
 
-PImage background;
 
+PImage background;
 // player inputs to control submarine: {up,down,left,right,shoot}
 boolean[] inputs = {false, false, false, false, false};
 
@@ -234,8 +234,10 @@ void playGame() {
 
     fill(255);
     textSize(20);
+
     text("Score: " + score, 50, 30);
     text("Level: " + level, 50, 60);
+
     // Check if all octopuses are eliminated
     if (octopuses.size() <= 5) {
         // Check if submarine reached the end
@@ -279,3 +281,4 @@ void backgroundScroll(PImage img){
     copy(img, 0, 0, img.width, height, x_remain, 0, img.width, height);
   }
 }
+
