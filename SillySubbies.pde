@@ -6,6 +6,8 @@ int score = 0;
 int level = 1;
 String[] highscore;
 
+
+PImage background;
 // player inputs to control submarine: {up,down,left,right,shoot}
 boolean[] inputs = {false, false, false, false, false};
 
@@ -16,6 +18,9 @@ void setup() {
     octopuses = new ArrayList<Octopus>();
     highscore = loadStrings("highscore.txt");
     spawnOctopuses();
+    
+    //Background Image
+    background = loadImage("Images/Water Background.png");
 }
 
 void draw() {
@@ -82,6 +87,7 @@ void move() {
     }
     if (inputs[4]) {
         bullets.add(new Bullet(submarine.x, submarine.y));
+        inputs[4] = !inputs[4];
     }
 }
 
@@ -184,10 +190,13 @@ void displayControls() {
 }
 
 void playGame() {
-    background(200);
+    //background(200);
+    //Background scroll functionality
+    backgroundScroll(background);
+    
+    
     move();
-    submarine.update();
-    submarine.display();
+    submarine.update();    
 
     for (int i = bullets.size() - 1; i >= 0; i--) {
         Bullet bullet = bullets.get(i);
@@ -208,6 +217,9 @@ void playGame() {
             bullets.remove(i);
         }
     }
+    
+    //Display Submarine after bullets
+    submarine.display();
 
     // Update and display octopuses
     for (Octopus octopus : octopuses) {
@@ -222,8 +234,10 @@ void playGame() {
 
     fill(255);
     textSize(20);
-    text("Score: " + score, 20, 30);
-    text("Level: " + level, 20, 60);
+
+    text("Score: " + score, 50, 30);
+    text("Level: " + level, 50, 60);
+
     // Check if all octopuses are eliminated
     if (octopuses.size() <= 5) {
         // Check if submarine reached the end
@@ -257,3 +271,14 @@ void resetGame() {
     octopuses.clear();
     spawnOctopuses();
 }
+
+void backgroundScroll(PImage img){
+  int x_right = frameCount % img.width;
+  copy(img, x_right, 0, img.width, height, 0, 0, img.width, height);
+  
+  int x_remain = img.width - x_right;
+  if (x_remain < width) {
+    copy(img, 0, 0, img.width, height, x_remain, 0, img.width, height);
+  }
+}
+
