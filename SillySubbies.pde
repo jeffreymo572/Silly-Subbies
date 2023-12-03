@@ -8,6 +8,9 @@ String[] highscore;
 GUI Gui;
 boolean paused;
 
+import processing.sound.*;
+SoundFile menu, fire, hit, death, win, zohit;
+SoundBoard soundBoard;
 
 PImage background;
 // player inputs to control submarine: {up,down,left,right,shoot}
@@ -26,14 +29,29 @@ void setup() {
     
     //Background Image
     background = loadImage("Images/Water Background.png");
+    
+    // Sounds
+    menu = new SoundFile(this, "Sound/menuSong.wav");
+    fire = new SoundFile(this, "Sound/Fire.wav");
+    hit = new SoundFile(this, "Sound/TorpedoHit.wav");
+    death = new SoundFile(this, "Sound/playerDeath.wav");
+    win = new SoundFile(this, "Sound/Win.wav");
+    zohit = new SoundFile(this, "Sound/zohit.wav");
+    soundBoard = new SoundBoard(menu, fire, hit, death, win, zohit);
+    
 }
 
 void draw() {
   if (gameState == 0) {
     Gui.displayHomeScreen();
-  } else if (gameState == 1) {
+    soundBoard.loopMenu();
+  }
+  // Game start
+  else if (gameState == 1) {
     if (!(paused)){
       playGame();
+      soundBoard.stopMenu();
+      soundBoard.loopZohit();
     }
     else{
       Gui.displayPaused();
@@ -48,6 +66,8 @@ void draw() {
   
    else if (gameState == 2) {
     Gui.gameOver();
+    soundBoard.stopZohit();
+    soundBoard.playDeath();
     }
    if (gameState == 4){
       Gui.displayControls();
@@ -130,9 +150,11 @@ void keyReleased() {
     }
     if (key == ' ') {
         inputs[4] = false;
+        soundBoard.playFire();
     }
 }
 void mousePressed() {
+    // Main menu
     if (gameState == 0) {
       // Check if the start button is clicked
       if (mouseX > 300 && mouseX < 500 && mouseY > 400 && mouseY < 450) {
@@ -146,6 +168,7 @@ void mousePressed() {
       }
     }
     
+    // Paused
     else if (gameState == 1){
       if (paused){
         println("Paused");
@@ -156,6 +179,7 @@ void mousePressed() {
       }
     }
     
+    // Death
     else if (gameState == 2){
       if (mouseX > 300 && mouseX < 500 && mouseY > 400 && mouseY < 450){
         gameState = 1;
@@ -163,6 +187,7 @@ void mousePressed() {
       }
     }
     
+    // Controls menu
     else if (gameState == 4){
       if (mouseX > 20 && mouseX < 120 && mouseY < 60 && mouseY > 20){
         gameState = 0;
@@ -191,6 +216,7 @@ void playGame() {
             if (bullet.hits(octopus)) {
                 bullets.remove(i);
                 octopuses.remove(j);
+                soundBoard.playHit();
                 score += 10;
             }
         }
@@ -227,18 +253,6 @@ void playGame() {
     }
 }
 
-void gameOver() {
-    textSize(32);
-    fill(255, 0, 0);
-    textAlign(CENTER, CENTER);
-    text("Game Over", width/2, height/2);
-    if (score > int(highscore[0])){
-        highscore[0] = str(score);
-        saveStrings("highscore.txt", highscore);
-    }
-    
-    noLoop();
-}
 
 void resetGame() {
     score = 0;
