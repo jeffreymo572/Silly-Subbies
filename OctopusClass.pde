@@ -33,6 +33,6 @@ class Octopus {
     
   }
   boolean offscreen() {
-    return x > width;
+    return x < -50;
   }
 }
