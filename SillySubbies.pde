@@ -4,6 +4,7 @@ ArrayList<Bullet> bullets;
 ArrayList<Octopus> octopuses;
 int score = 0;
 int level = 1;
+int numEnemies = 15;
 String[] highscore;
 GUI Gui;
 boolean paused;
@@ -55,13 +56,7 @@ void draw() {
 }
 
 void spawnOctopuses() {
-    if (random(1) >0.3){
      octopuses.add(new Octopus());   
-    }
-    //int numOctopuses = level * 5;
-    //for (int i = 0; i < numOctopuses; i++) {
-    //    octopuses.add(new Octopus());
-    //}
 }
 
 void move() {
@@ -229,17 +224,12 @@ void playGame() {
     Gui.displayScore();
     
     // Check if all octopuses are eliminated
-    if (octopuses.size() <= 15) {
+    if (octopuses.size() <= numEnemies) {
         spawnOctopuses();
     }
-    //    // Check if submarine reached the end
-    //    if (submarine.x >= 850) {
-    //        gameState = 3; // Switch to level complete state
-    //    } else {
-    //        level++;
-    //        spawnOctopuses();
-    //    }
-    //}
+    if (score % 50 == 1){
+     numEnemies += 5;   
+    }
     
 }
 
