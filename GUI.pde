@@ -90,14 +90,12 @@ class GUI{
     fill(255);
     textSize(20);
     text("Score: " + score, 60, 30);
-    text("Level: " + level, 60, 60);
     // Check if all octopuses are eliminated
     if (octopuses.size() <= 5) {
         // Check if submarine reached the end
         if (submarine.x >= 850) {
             gameState = 3; // Switch to level complete state
         } else {
-            level++;
             spawnOctopuses();
         }
     }

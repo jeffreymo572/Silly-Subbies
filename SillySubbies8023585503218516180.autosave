@@ -4,7 +4,6 @@ ArrayList<Bullet> bullets;
 ArrayList<Octopus> octopuses;
 int score = 0;
 int level = 1;
-int numEnemies = 15;
 String[] highscore;
 GUI Gui;
 boolean paused;
@@ -14,7 +13,6 @@ SoundFile menu, fire, hit, death, win, zohit;
 SoundBoard soundBoard;
 
 PImage background;
-
 // player inputs to control submarine: {up,down,left,right,shoot}
 boolean[] inputs = {false, false, false, false, false};
 
@@ -77,7 +75,10 @@ void draw() {
 }
 
 void spawnOctopuses() {
-     octopuses.add(new Octopus());   
+    int numOctopuses = level * 5;
+    for (int i = 0; i < numOctopuses; i++) {
+        octopuses.add(new Octopus());
+    }
 }
 
 void move() {
@@ -86,22 +87,18 @@ void move() {
         submarine.accel.y = 0.1;
         submarine.up();
     }
-    // move down
     if (inputs[1]) {
         submarine.accel.y = 0.1;
         submarine.down();
     }
-    // move backward
     if (inputs[2]) {
         submarine.accel.x = 0.1;
         submarine.backward();
     }
-    //move right
     if (inputs[3]) {
-        submarine.accel.x = 0.015;
+        submarine.accel.x = 0.1;
         submarine.forward();
     }
-    //shoot
     if (inputs[4]) {
         bullets.add(new Bullet(submarine.x, submarine.y));
         inputs[4] = !inputs[4];
@@ -186,6 +183,7 @@ void mousePressed() {
     else if (gameState == 2){
       if (mouseX > 300 && mouseX < 500 && mouseY > 400 && mouseY < 450){
         gameState = 1;
+        soundBoard.stopDeath();
         resetGame();
       }
     }
@@ -212,11 +210,9 @@ void playGame() {
         Bullet bullet = bullets.get(i);
         bullet.update();
         bullet.display();
-        
-        
+
         // Check for bullet-octopus collisions
         for (int j = octopuses.size() - 1; j >= 0; j--) {
-            
             Octopus octopus = octopuses.get(j);
             if (bullet.hits(octopus)) {
                 bullets.remove(i);
@@ -233,12 +229,9 @@ void playGame() {
     
     //Display Submarine after bullets
     submarine.display();
+
     // Update and display octopuses
-    ArrayList<Octopus> octopusesCopy = new ArrayList<Octopus>();
     for (Octopus octopus : octopuses) {
-        if (!octopus.offscreen()){ 
-         octopusesCopy.add(octopus);
-        } 
         octopus.update();
         octopus.display();
 
@@ -247,17 +240,18 @@ void playGame() {
             gameState = 2; // Switch to game over state
         }
     }
-    octopuses = octopusesCopy;
     Gui.displayScore();
-    
+
     // Check if all octopuses are eliminated
-    if (octopuses.size() <= numEnemies) {
-        spawnOctopuses();
+    if (octopuses.size() <= 5) {
+        // Check if submarine reached the end
+        if (submarine.x >= 850) {
+            gameState = 3; // Switch to level complete state
+        } else {
+            level++;
+            spawnOctopuses();
+        }
     }
-    if (score % 50 == 1){
-     numEnemies += 5;   
-    }
-    
 }
 
 
