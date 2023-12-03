@@ -31,4 +31,7 @@ class Octopus {
     }
     
   }
+  boolean offscreen() {
+    return x > width;
+  }
 }

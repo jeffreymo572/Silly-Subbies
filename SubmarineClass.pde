@@ -3,8 +3,7 @@ class Submarine {
   float speed = 15;
   float radius = 20; 
   PVector vel = new PVector(0,0);
-  PVector pos = new PVector(x,y);
-  float accel = 0.1;
+  PVector accel = new PVector(0,0);;
   PImage[] subSprite = new PImage[11];
   int currentFrame = 0;
   int iterator = 1;
@@ -24,6 +23,7 @@ class Submarine {
   void update() {
     x = constrain(x, 0, width - radius);
     y = constrain(y, 0, height - radius);
+
     
     iterator = (iterator + 1) % 2;
     currentFrame = (currentFrame + iterator) % subSprite.length;
@@ -35,27 +35,24 @@ class Submarine {
     imageMode(CENTER);
     image(subSprite[currentFrame], x, y, 120, 80);
     
-    bubbles = new Bubbles(5, x - 60, y + 40, y - 40);
-    bubbles.update();
+    //bubbles = new Bubbles(5, x - 60, y + 40, y - 40);
+    //bubbles.update();
   }
-  
+
   void up() {
-      
-    vel.y += lerp(vel.y,speed,accel);
-    println(vel.y);
+    vel.y = lerp(vel.y,speed,accel.y);
     y -= vel.y;
-    
   }
   void down() {
-      vel.y += lerp(vel.y,speed,accel);
+      vel.y = lerp(vel.y,speed,accel.y);
     y += vel.y;
   }
   void backward(){
-      vel.x += lerp(vel.x,speed,accel);
+      vel.x = lerp(vel.x,speed,accel.x);
    x -= vel.x;   
   }
   void forward(){
-      vel.x += lerp(vel.x,speed,accel);
+   vel.x = lerp(vel.x,speed,accel.x);
    x += vel.x;   
   }
   
