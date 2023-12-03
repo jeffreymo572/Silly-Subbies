@@ -8,7 +8,8 @@ class Submarine {
   int currentFrame = 0;
   int iterator = 1;
   
-  Bubbles bubbles;
+  BoxCollider collider;
+  ArrayList<Bubble> bubbles;
   
   Submarine() {
     x = width / 2;
@@ -18,48 +19,53 @@ class Submarine {
       String imageName = "Sprites/Player/SpriteImages/subAnimFrames-" + nf(i, 2) + ".png";
       subSprite[i] = loadImage(imageName);
     }
+    
+    collider = new BoxCollider(x, y, 55, 55, 20, 35);
   }
   
   void update() {
     x = constrain(x, 0, width - radius);
     y = constrain(y, 0, height - radius);
-
     
     iterator = (iterator + 1) % 2;
     currentFrame = (currentFrame + iterator) % subSprite.length;
   }
   
   void display() {
-    //fill(0, 0, 255); 
-    //ellipse(x, y, 2 * radius, 2 * radius);
+    // Debug - Collider check
+    rectMode(CORNERS);
+    rect(x - collider.l_len, y - collider.u_hei, x + collider.r_len, y + collider.d_hei);
     
     imageMode(CENTER);
-    image(subSprite[currentFrame], x, y, 120, 80);
-    
-    //bubbles = new Bubbles(5, x - 60, y + 40, y - 40);
-    //bubbles.update();
+    image(subSprite[currentFrame], x, y, 120, 80);    
   }
 
   void up() {
     vel.y = lerp(vel.y,speed,accel.y);
     y -= vel.y;
+    
+    collider.y = this.y; 
   }
   void down() {
     vel.y = lerp(vel.y,speed,accel.y);
     y += vel.y;
+    
+    collider.y = this.y;
   }
   void backward(){
     vel.x = lerp(vel.x,speed,accel.x);
     x -= vel.x;
+    
+    collider.x = this.x;
   }
   void forward(){
     vel.x = lerp(vel.x,speed,accel.x);
     x += vel.x;
+    
+    collider.x = this.x;
   }
   
   boolean hits(Octopus octopus) {
-    // Needs work
-    float distance = dist(x, y, octopus.x, octopus.y);
-    return distance < radius + octopus.radius;
+    return collider.checkCollisionBox(octopus.collider);
   }
 }

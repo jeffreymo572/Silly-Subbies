@@ -4,6 +4,8 @@ class Octopus {
   float radius = 15;
   boolean isRed = false;
   
+  BoxCollider collider;
+  
   PImage orange = loadImage("Images/Enemy/enemy.png");  // Load the green light image
   PImage red = loadImage("Images/Enemy/enemyBoss.png");  // Load the green light image
   
@@ -15,15 +17,25 @@ class Octopus {
       isRed = true;
       speed -= 2;
     }
+    
+    if (isRed){
+      collider = new BoxCollider(x, y, 30, 30, 20, 15);
+    } else {
+      collider = new BoxCollider(x, y, 25, 25, 17, 10);
+    }
+    
   }
   
   void update() {
     x -= speed;
+    collider.x = x;
   }
   
   void display() {
-    //fill(255, 165, 0); 
-    //ellipse(x, y, 2 * radius, 2 * radius);
+    // Debug - Collider check
+    rectMode(CORNERS);
+    rect(x - collider.l_len, y - collider.u_hei, x + collider.r_len, y + collider.d_hei);
+    
     imageMode(CENTER);
     if (isRed){
       image(red, x, y, 100, 100);
@@ -33,6 +45,6 @@ class Octopus {
     
   }
   boolean offscreen() {
-    return x < -50;
+    return x > width;
   }
 }

@@ -12,7 +12,7 @@ class Bubble {
     y = height / 2;
     
     for (int i = 0; i < bubSprite.length; i++){
-      String imageName = "Sprites/Bubbles/SpriteImages/pixil-frame-0-" + nf(i, 1) + ".png";
+      String imageName = "Sprites/Bubbles/pixil-frame-0-" + nf(i, 1) + ".png";
       bubSprite[i] = loadImage(imageName);
     }
   }
@@ -22,7 +22,7 @@ class Bubble {
     this.y = y;
     
     for (int i = 0; i < bubSprite.length; i++){
-      String imageName = "Sprites/Bubbles/SpriteImages/pixil-frame-0-" + nf(i, 1) + ".png";
+      String imageName = "Sprites/Bubbles/pixil-frame-0-" + nf(i, 1) + ".png";
       bubSprite[i] = loadImage(imageName);
     }
   }
