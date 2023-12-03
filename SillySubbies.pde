@@ -31,7 +31,6 @@ void draw() {
     }
     else{
       Gui.displayPaused();
-     
     }
 
     // Check if submarine reached the end
@@ -138,6 +137,20 @@ void mousePressed() {
         gameState = 4; // Stay on home screen
         Gui.displayControls();
       }
+    }
+    
+    else if (gameState == 1){
+      if (paused){
+        println("Paused");
+        if (mouseX > 20 && mouseX < 120 && mouseY < 60 && mouseY > 20){
+          paused = !paused;
+          playGame();
+        }
+      }
+    }
+    
+    else if (gameState == 2){
+      
     }
     
     else if (gameState == 4){

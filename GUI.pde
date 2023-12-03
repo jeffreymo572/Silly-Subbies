@@ -72,13 +72,18 @@ class GUI{
       textSize(32);
       fill(255, 0, 0);
       textAlign(CENTER, CENTER);
-      text("Game Over", width/2, height/2);
+      text("Game Over", width/2, height/2-60);
       if (score > int(highscore[0])){
           highscore[0] = str(score);
           saveStrings("highscore.txt", highscore);
       }
       
-      noLoop();
+      // Play again button
+      fill(0, 0, 150);
+      rect(300, 400, 200, 50);
+      fill(255);
+      textSize(20);
+      text("Play Again", width/2, 425);
   }
   
   void displayScore(){
