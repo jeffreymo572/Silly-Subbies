@@ -1,6 +1,6 @@
 class Submarine {
   float x, y;
-  float speed = 15;
+  float speed = 5;
   float radius = 20; 
   PVector vel = new PVector(0,0);
   PVector accel = new PVector(0,0);;

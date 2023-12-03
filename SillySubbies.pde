@@ -68,18 +68,22 @@ void move() {
         submarine.accel.y = 0.1;
         submarine.up();
     }
+    // move down
     if (inputs[1]) {
         submarine.accel.y = 0.1;
         submarine.down();
     }
+    // move backward
     if (inputs[2]) {
         submarine.accel.x = 0.1;
         submarine.backward();
     }
+    //move right
     if (inputs[3]) {
-        submarine.accel.x = 0.1;
+        submarine.accel.x = 0.015;
         submarine.forward();
     }
+    //shoot
     if (inputs[4]) {
         bullets.add(new Bullet(submarine.x, submarine.y));
         inputs[4] = !inputs[4];
