@@ -4,7 +4,7 @@ ArrayList<Bullet> bullets;
 ArrayList<Octopus> octopuses;
 int score = 0;
 int level = 1;
-String[] highscore = loadStrings("highscore.txt");
+String[] highscore;
 
 // player inputs to control submarine: {up,down,left,right,shoot}
 boolean[] inputs = {false, false, false, false, false};
@@ -14,7 +14,7 @@ void setup() {
     submarine = new Submarine();
     bullets = new ArrayList<Bullet>();
     octopuses = new ArrayList<Octopus>();
-    //println(highscore[0]);
+    highscore = loadStrings("highscore.txt");
     spawnOctopuses();
 }
 
@@ -149,7 +149,7 @@ void displayHomeScreen() {
     textAlign(CENTER, CENTER);
     textSize(32);
     text("Submarine Game", width/2, height/3);
-    text("highscore: ", width/2, height/3 +50);
+    text("highscore: " + highscore[0], width/2, height/3 +50);
     // Start button
     fill(0, 255, 0);
     rect(300, 400, 200, 50);
@@ -241,6 +241,11 @@ void gameOver() {
     fill(255, 0, 0);
     textAlign(CENTER, CENTER);
     text("Game Over", width/2, height/2);
+    if (score > int(highscore[0])){
+        highscore[0] = str(score);
+        saveStrings("highscore.txt", highscore);
+    }
+    
     noLoop();
 }
 
