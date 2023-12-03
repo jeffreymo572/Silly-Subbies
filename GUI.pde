@@ -37,6 +37,7 @@ class GUI{
     textSize(18);
     text("Use UP and DOWN arrow keys to move the submarine.", width/2, height/2 - 30);
     text("Press SPACEBAR to shoot bullets and eliminate octopuses.", width/2, height/2 + 30);
+    text("Press P to paused", width/2, height/2 + 90);
 
     // Back button
     fill(255, 0, 0);
@@ -95,5 +96,23 @@ class GUI{
             spawnOctopuses();
         }
     }
+  }
+  
+  void displayPaused(){
+    background(100);
+    fill(255);
+    textAlign(CENTER, CENTER);
+    textSize(32);
+    text("Paused", width/2, height/3);
+    
+    // Paused Text
+    text("Press P to unpause or click resume", width/2, height/2+30);
+    
+    // Resume button
+    fill(255, 0, 0);
+    rect(20, 20, 100, 40);
+    fill(255);
+    textSize(16);
+    text("Resume", 70, 40); 
   }
 }

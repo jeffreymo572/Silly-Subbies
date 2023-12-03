@@ -6,6 +6,7 @@ int score = 0;
 int level = 1;
 String[] highscore;
 GUI Gui;
+boolean paused;
 
 // player inputs to control submarine: {up,down,left,right,shoot}
 boolean[] inputs = {false, false, false, false, false};
@@ -18,25 +19,34 @@ void setup() {
   highscore = loadStrings("highscore.txt");
   spawnOctopuses();
   Gui = new GUI(highscore);
+  paused = false;
 }
 
 void draw() {
   if (gameState == 0) {
     Gui.displayHomeScreen();
   } else if (gameState == 1) {
-    playGame();
+    if (!(paused)){
+      playGame();
+    }
+    else{
+      Gui.displayPaused();
+     
+    }
 
     // Check if submarine reached the end
     if (submarine.x >= 850) {
         gameState = 0; // Switch to the home screen
         Gui.displayLevelComplete();
     }
-  } else if (gameState == 2) {
+  }
+  
+   else if (gameState == 2) {
     Gui.gameOver();
-  }
-  if (gameState == 4){
-    Gui.displayControls();
-  }
+    }
+   if (gameState == 4){
+      Gui.displayControls();
+   }
 }
 
 void spawnOctopuses() {
@@ -84,6 +94,10 @@ void keyPressed() {
     }
     if (key == ' ') {
       inputs[4] = true;
+    }
+    
+    if (key == 'p'){
+      paused = !paused;
     }
 }
 
