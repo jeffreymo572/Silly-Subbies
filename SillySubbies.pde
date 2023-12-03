@@ -58,17 +58,32 @@ void spawnOctopuses() {
 }
 
 void keyPressed() {
-  if (keyCode == UP) {
+  if (key == 'w') {
     submarine.up();
-  } else if (keyCode == DOWN) {
+  }
+  if (key == 's') {
     submarine.down();
-  } else if (key == ' ') {
+  }
+  if (key == 'a'){
+      submarine.backward();
+  }
+  if (key == 'd'){
+      submarine.forward();
+  }
+  if (key == ' ') {
     bullets.add(new Bullet(submarine.x, submarine.y));
   }
 }
 
 
-
+void keyReleased(){
+    if (key == 'w' | key == 's'){
+     submarine.vel.y = 0;   
+    }
+    if (key == 'a' | key == 'd'){
+     submarine.vel.x = 0; 
+    }
+}
 void mousePressed() {
   if (gameState == 0) {
     // Check if the start button is clicked
@@ -125,7 +140,7 @@ void displayControls() {
 }
 
 void playGame() {
-  background(0);
+  background(200);
   
   submarine.update();
   submarine.display();
