@@ -8,8 +8,8 @@ String[] highscore;
 GUI Gui;
 boolean paused;
 
-
 PImage background;
+
 // player inputs to control submarine: {up,down,left,right,shoot}
 boolean[] inputs = {false, false, false, false, false};
 
@@ -76,7 +76,7 @@ void move() {
         submarine.backward();
     }
     if (inputs[3]) {
-        submarine.accel.x = 0.1;
+        submarine.accel.x = 0.015;
         submarine.forward();
     }
     if (inputs[4]) {

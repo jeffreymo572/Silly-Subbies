@@ -1,6 +1,6 @@
 class Submarine {
   float x, y;
-  float speed = 15;
+  float speed = 5;
   float radius = 20; 
   PVector vel = new PVector(0,0);
   PVector accel = new PVector(0,0);;
@@ -32,6 +32,7 @@ class Submarine {
   void display() {
     //fill(0, 0, 255); 
     //ellipse(x, y, 2 * radius, 2 * radius);
+    
     imageMode(CENTER);
     image(subSprite[currentFrame], x, y, 120, 80);
     
@@ -44,16 +45,16 @@ class Submarine {
     y -= vel.y;
   }
   void down() {
-      vel.y = lerp(vel.y,speed,accel.y);
+    vel.y = lerp(vel.y,speed,accel.y);
     y += vel.y;
   }
   void backward(){
-      vel.x = lerp(vel.x,speed,accel.x);
-   x -= vel.x;   
+    vel.x = lerp(vel.x,speed,accel.x);
+    x -= vel.x;
   }
   void forward(){
-   vel.x = lerp(vel.x,speed,accel.x);
-   x += vel.x;   
+    vel.x = lerp(vel.x,speed,accel.x);
+    x += vel.x;
   }
   
   boolean hits(Octopus octopus) {
