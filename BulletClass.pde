@@ -18,7 +18,7 @@ class Bullet {
     //fill(255, 0, 0); 
     //ellipse(x, y, 2 * radius, 2 * radius);
     imageMode(CENTER);
-    image(torpedo, x, y, 20, 20);
+    image(torpedo, x + 50, y + 30, 25, 15); //x and y offsets for the submarine
   }
   
   boolean hits(Octopus octopus) {
