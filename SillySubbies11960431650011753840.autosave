@@ -157,10 +157,7 @@ void mousePressed() {
     }
     
     else if (gameState == 2){
-      if (mouseX > 300 && mouseX < 500 && mouseY > 400 && mouseY < 450){
-        gameState = 1;
-        resetGame();
-      }
+      
     }
     
     else if (gameState == 4){
