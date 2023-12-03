@@ -1,6 +1,6 @@
 class Octopus {
   float x, y;
-  float speed = 2;
+  float speed = 4;
   float radius = 15;
   boolean isRed = false;
   
@@ -13,6 +13,7 @@ class Octopus {
     
     if (random(0,2) >= 1){
       isRed = true;
+      speed -= 2;
     }
   }
   
@@ -32,6 +33,6 @@ class Octopus {
     
   }
   boolean offscreen() {
-    return x > width;
+    return x < -50;
   }
 }
