@@ -87,6 +87,7 @@ void move() {
     }
     if (inputs[4]) {
         bullets.add(new Bullet(submarine.x, submarine.y));
+        inputs[4] = !inputs[4];
     }
 }
 
