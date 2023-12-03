@@ -55,13 +55,10 @@ void draw() {
 }
 
 void spawnOctopuses() {
-    if (random(1) >0.3){
-     octopuses.add(new Octopus());   
+    int numOctopuses = level * 5;
+    for (int i = 0; i < numOctopuses; i++) {
+        octopuses.add(new Octopus());
     }
-    //int numOctopuses = level * 5;
-    //for (int i = 0; i < numOctopuses; i++) {
-    //    octopuses.add(new Octopus());
-    //}
 }
 
 void move() {
@@ -164,10 +161,7 @@ void mousePressed() {
     }
     
     else if (gameState == 2){
-      if (mouseX > 300 && mouseX < 500 && mouseY > 400 && mouseY < 450){
-        gameState = 1;
-        resetGame();
-      }
+      
     }
     
     else if (gameState == 4){
@@ -191,11 +185,9 @@ void playGame() {
         Bullet bullet = bullets.get(i);
         bullet.update();
         bullet.display();
-        
-        
+
         // Check for bullet-octopus collisions
         for (int j = octopuses.size() - 1; j >= 0; j--) {
-            
             Octopus octopus = octopuses.get(j);
             if (bullet.hits(octopus)) {
                 bullets.remove(i);
@@ -211,12 +203,9 @@ void playGame() {
     
     //Display Submarine after bullets
     submarine.display();
+
     // Update and display octopuses
-    ArrayList<Octopus> octopusesCopy = new ArrayList<Octopus>();
     for (Octopus octopus : octopuses) {
-        if (!octopus.offscreen()){ 
-         octopusesCopy.add(octopus);
-        } 
         octopus.update();
         octopus.display();
 
@@ -225,22 +214,18 @@ void playGame() {
             gameState = 2; // Switch to game over state
         }
     }
-    octopuses = octopusesCopy;
     Gui.displayScore();
-    
+
     // Check if all octopuses are eliminated
-    if (octopuses.size() <= 15) {
-        spawnOctopuses();
+    if (octopuses.size() <= 5) {
+        // Check if submarine reached the end
+        if (submarine.x >= 850) {
+            gameState = 3; // Switch to level complete state
+        } else {
+            level++;
+            spawnOctopuses();
+        }
     }
-    //    // Check if submarine reached the end
-    //    if (submarine.x >= 850) {
-    //        gameState = 3; // Switch to level complete state
-    //    } else {
-    //        level++;
-    //        spawnOctopuses();
-    //    }
-    //}
-    
 }
 
 void gameOver() {
