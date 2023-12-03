@@ -5,6 +5,8 @@ ArrayList<Octopus> octopuses;
 int score = 0;
 int level = 1;
 String[] highscore;
+GUI Gui;
+boolean paused;
 
 
 PImage background;
@@ -12,52 +14,44 @@ PImage background;
 boolean[] inputs = {false, false, false, false, false};
 
 void setup() {
+
     size(800, 600);
     submarine = new Submarine();
     bullets = new ArrayList<Bullet>();
     octopuses = new ArrayList<Octopus>();
     highscore = loadStrings("highscore.txt");
     spawnOctopuses();
+    Gui = new GUI(highscore);
+    paused = false;
     
     //Background Image
     background = loadImage("Images/Water Background.png");
 }
 
 void draw() {
-    if (gameState == 0) {
-        displayHomeScreen();
-    } else if (gameState == 1) {
-        playGame();
-
-        // Check if submarine reached the end
-        if (submarine.x >= 850) {
-            gameState = 0; // Switch to the home screen
-            displayLevelComplete();
-        }
-    } else if (gameState == 2) {
-        gameOver();
+  if (gameState == 0) {
+    Gui.displayHomeScreen();
+  } else if (gameState == 1) {
+    if (!(paused)){
+      playGame();
     }
-}
+    else{
+      Gui.displayPaused();
+    }
 
-void displayLevelComplete() {
-    background(0);
-    fill(255);
-    textAlign(CENTER, CENTER);
-    textSize(32);
-    text("Level " + level + " Complete", width/2, height/3);
-
-    // Go home button
-    fill(0, 255, 0);
-    rect(300, 400, 200, 50);
-    fill(255);
-    textSize(20);
-    text("Go Home", width/2, 425);
-
-    // Next level button
-    fill(0, 0, 255);
-    rect(300, 500, 200, 50);
-    fill(255);
-    text("Play Next Level", width/2, 525);
+    // Check if submarine reached the end
+    if (submarine.x >= 850) {
+        gameState = 0; // Switch to the home screen
+        Gui.displayLevelComplete();
+    }
+  }
+  
+   else if (gameState == 2) {
+    Gui.gameOver();
+    }
+   if (gameState == 4){
+      Gui.displayControls();
+   }
 }
 
 void spawnOctopuses() {
@@ -93,19 +87,23 @@ void move() {
 
 void keyPressed() {
     if (key == 'w') {
-        inputs[0] = true;
+      inputs[0] = true;
     }
     if (key == 's') {
-        inputs[1] = true;
+      inputs[1] = true;
     }
     if (key == 'a') {
-        inputs[2] = true;
+      inputs[2] = true;
     }
     if (key == 'd') {
-        inputs[3] = true;
+      inputs[3] = true;
     }
     if (key == ' ') {
-        inputs[4] = true;
+      inputs[4] = true;
+    }
+    
+    if (key == 'p'){
+      paused = !paused;
     }
 }
 
@@ -136,57 +134,38 @@ void keyReleased() {
 }
 void mousePressed() {
     if (gameState == 0) {
-        // Check if the start button is clicked
-        if (mouseX > 300 && mouseX < 500 && mouseY > 400 && mouseY < 450) {
-            gameState = 1; // Switch to game state
-            resetGame(); // Initialize or reset game-related variables
-        }
-        // Check if the controls box is clicked
-        else if (mouseX > 300 && mouseX < 500 && mouseY > 500 && mouseY < 550) {
-            gameState = 0; // Stay on home screen
-            displayControls();
-        }
+      // Check if the start button is clicked
+      if (mouseX > 300 && mouseX < 500 && mouseY > 400 && mouseY < 450) {
+        gameState = 1; // Switch to game state
+        resetGame(); // Initialize or reset game-related variables
+      }
+      // Check if the controls box is clicked
+      else if (mouseX > 300 && mouseX < 500 && mouseY > 500 && mouseY < 550) {
+        gameState = 4; // Stay on home screen
+        Gui.displayControls();
+      }
     }
-}
-
-void displayHomeScreen() {
-    background(0);
-    fill(255);
-    textAlign(CENTER, CENTER);
-    textSize(32);
-    text("Submarine Game", width/2, height/3);
-    text("highscore: " + highscore[0], width/2, height/3 +50);
-    // Start button
-    fill(0, 255, 0);
-    rect(300, 400, 200, 50);
-    fill(255);
-    textSize(20);
-    text("Start Game", width/2, 425);
-
-    // Controls box
-    fill(0, 0, 255);
-    rect(300, 500, 200, 50);
-    fill(255);
-    text("Controls", width/2, 525);
-}
-
-void displayControls() {
-    // Display controls information on the home screen
-    background(0);
-    fill(255);
-    textAlign(CENTER, CENTER);
-    textSize(24);
-    text("Controls", width/2, height/4);
-    textSize(18);
-    text("Use UP and DOWN arrow keys to move the submarine.", width/2, height/2 - 30);
-    text("Press SPACEBAR to shoot bullets and eliminate octopuses.", width/2, height/2 + 30);
-
-    // Back button
-    fill(255, 0, 0);
-    rect(20, 20, 100, 40);
-    fill(255);
-    textSize(16);
-    text("Back", 70, 40);
+    
+    else if (gameState == 1){
+      if (paused){
+        println("Paused");
+        if (mouseX > 20 && mouseX < 120 && mouseY < 60 && mouseY > 20){
+          paused = !paused;
+          playGame();
+        }
+      }
+    }
+    
+    else if (gameState == 2){
+      
+    }
+    
+    else if (gameState == 4){
+      if (mouseX > 20 && mouseX < 120 && mouseY < 60 && mouseY > 20){
+        gameState = 0;
+        Gui.displayHomeScreen();
+      }
+    }
 }
 
 void playGame() {
@@ -231,6 +210,7 @@ void playGame() {
             gameState = 2; // Switch to game over state
         }
     }
+    Gui.displayScore();
 
     fill(255);
     textSize(20);
