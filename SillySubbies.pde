@@ -189,62 +189,15 @@ void displayControls() {
 }
 
 void playGame() {
-    //background(200);
-    //Background scroll functionality
-    backgroundScroll(background);
+  move();
+  submarine.update();
     
+  background_Layer();
     
-    move();
-    submarine.update();    
-
-    for (int i = bullets.size() - 1; i >= 0; i--) {
-        Bullet bullet = bullets.get(i);
-        bullet.update();
-        bullet.display();
-
-        // Check for bullet-octopus collisions
-        for (int j = octopuses.size() - 1; j >= 0; j--) {
-            Octopus octopus = octopuses.get(j);
-            if (bullet.hits(octopus)) {
-                bullets.remove(i);
-                octopuses.remove(j);
-                score += 10;
-            }
-        }
-        // Remove bullets that go off-screen
-        if (bullet.offscreen()) {
-            bullets.remove(i);
-        }
-    }
-    
-    //Display Submarine after bullets
-    submarine.display();
-
-    // Update and display octopuses
-    for (Octopus octopus : octopuses) {
-        octopus.update();
-        octopus.display();
-
-        // Check for submarine-octopus collisions
-        if (submarine.hits(octopus)) {
-            gameState = 2; // Switch to game over state
-        }
-    }
-
-    fill(255);
-    textSize(20);
-    text("Score: " + score, 50, 30);
-    text("Level: " + level, 50, 60);
-    // Check if all octopuses are eliminated
-    if (octopuses.size() <= 5) {
-        // Check if submarine reached the end
-        if (submarine.x >= 850) {
-            gameState = 3; // Switch to level complete state
-        } else {
-            level++;
-            spawnOctopuses();
-        }
-    }
+  midground_Layer_2(); //Contains Octopi
+  midground_Layer_1(); //Contains Bullets
+  
+  foreground_Layer(); //Contains submarine and GUI
 }
 
 void gameOver() {
@@ -277,4 +230,65 @@ void backgroundScroll(PImage img){
   if (x_remain < width) {
     copy(img, 0, 0, img.width, height, x_remain, 0, img.width, height);
   }
+}
+
+void foreground_Layer(){
+  //Display Submarine after bullets
+    submarine.display();
+    
+    fill(255);
+    textSize(20);
+    text("Score: " + score, 50, 30);
+    text("Level: " + level, 50, 60);
+    // Check if all octopuses are eliminated
+    if (octopuses.size() <= 5) {
+        // Check if submarine reached the end
+        if (submarine.x >= 850) {
+            gameState = 3; // Switch to level complete state
+        } else {
+            level++;
+            spawnOctopuses();
+        }
+    }
+}
+
+void midground_Layer_1(){
+  //Bullets
+  for (int i = bullets.size() - 1; i >= 0; i--) {
+        Bullet bullet = bullets.get(i);
+        bullet.update();
+        bullet.display();
+
+        // Check for bullet-octopus collisions
+        for (int j = octopuses.size() - 1; j >= 0; j--) {
+            Octopus octopus = octopuses.get(j);
+            if (bullet.hits(octopus)) {
+                bullets.remove(i);
+                octopuses.remove(j);
+                score += 10;
+            }
+        }
+        // Remove bullets that go off-screen
+        if (bullet.offscreen()) {
+            bullets.remove(i);
+        }
+    }
+}
+
+void midground_Layer_2(){
+  // Update and display octopuses
+  for (Octopus octopus : octopuses) {
+      octopus.update();
+      octopus.display();
+
+      // Check for submarine-octopus collisions
+      if (submarine.hits(octopus)) {
+          gameState = 2; // Switch to game over state
+      }
+  }
+}
+
+void background_Layer(){
+  //Background scroll functionality
+  backgroundScroll(background);
 }
