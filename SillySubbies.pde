@@ -78,6 +78,10 @@ void draw() {
 
 void spawnOctopuses() {
      octopuses.add(new Octopus());   
+<<<<<<< Updated upstream
+=======
+    }
+>>>>>>> Stashed changes
 }
 
 void move() {
@@ -96,7 +100,7 @@ void move() {
         submarine.accel.x = 0.1;
         submarine.backward();
     }
-    //move right
+    //move forward
     if (inputs[3]) {
         submarine.accel.x = 0.015;
         submarine.forward();
@@ -200,7 +204,6 @@ void mousePressed() {
 }
 
 void playGame() {
-    //background(200);
     //Background scroll functionality
     backgroundScroll(background);
     
@@ -254,10 +257,13 @@ void playGame() {
     if (octopuses.size() <= numEnemies) {
         spawnOctopuses();
     }
+<<<<<<< Updated upstream
     if (score % 50 == 1){
      numEnemies += 5;   
     }
     
+=======
+>>>>>>> Stashed changes
 }
 
 

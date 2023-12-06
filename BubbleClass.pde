@@ -32,7 +32,6 @@ class Bubble {
     x = constrain(x, 0, width - radius);
     y = constrain(y, 0, height - radius);
     
-    //iterator = (iterator + 1) % 2;
     currentFrame = (currentFrame + 1) % bubSprite.length;
   }
   
