@@ -78,10 +78,6 @@ void draw() {
 
 void spawnOctopuses() {
      octopuses.add(new Octopus());   
-<<<<<<< Updated upstream
-=======
-    }
->>>>>>> Stashed changes
 }
 
 void move() {
@@ -257,13 +253,9 @@ void playGame() {
     if (octopuses.size() <= numEnemies) {
         spawnOctopuses();
     }
-<<<<<<< Updated upstream
     if (score % 50 == 1){
      numEnemies += 5;   
     }
-    
-=======
->>>>>>> Stashed changes
 }
 
 
