@@ -30,14 +30,8 @@ class Submarine {
   }
   
   void display() {
-    //fill(0, 0, 255); 
-    //ellipse(x, y, 2 * radius, 2 * radius);
-    
     imageMode(CENTER);
     image(subSprite[currentFrame], x, y, 120, 80);
-    
-    //bubbles = new Bubbles(5, x - 60, y + 40, y - 40);
-    //bubbles.update();
   }
 
   void up() {
@@ -58,7 +52,6 @@ class Submarine {
   }
   
   boolean hits(Octopus octopus) {
-    // Needs work
     float distance = dist(x, y, octopus.x, octopus.y);
     return distance < radius + octopus.radius;
   }

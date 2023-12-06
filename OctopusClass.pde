@@ -22,8 +22,6 @@ class Octopus {
   }
   
   void display() {
-    //fill(255, 165, 0); 
-    //ellipse(x, y, 2 * radius, 2 * radius);
     imageMode(CENTER);
     if (isRed){
       image(red, x, y, 100, 100);
