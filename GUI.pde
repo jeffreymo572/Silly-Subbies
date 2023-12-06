@@ -37,7 +37,7 @@ class GUI{
     textSize(18);
     text("Press WASD for up, left, down, and right.", width/2, height/2 - 30);
     text("Press SPACEBAR to shoot bullets and eliminate octopuses.", width/2, height/2 + 30);
-    text("Press P to paused", width/2, height/2 + 90);
+    text("Press P to pause the game", width/2, height/2 + 90);
 
     // Back button
     fill(255, 0, 0);
