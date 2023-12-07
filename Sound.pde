@@ -2,6 +2,7 @@ import processing.sound.*;
 
 class SoundBoard{
   SoundFile menu, fire, hit, death, win, zohit;
+  boolean deathPlayed = false;
 
   SoundBoard(SoundFile menu, SoundFile fire, SoundFile hit, SoundFile death, SoundFile win, SoundFile zohit){
     this.menu = menu;
@@ -64,6 +65,7 @@ class SoundBoard{
   void playDeath(){
     if (!this.death.isPlaying()){
       this.death.play();
+      deathPlayed = true;
     }
   }
   void stopDeath(){
