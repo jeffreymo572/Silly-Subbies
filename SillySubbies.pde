@@ -30,9 +30,9 @@ void setup() {
     muted = false;
     
     //Spawn in initial octopuses
-    for (int i = 0; i < 15; i += 1){
-      octopuses.add(new Octopus());
-    }
+    //for (int i = 0; i < 15; i += 1){
+    //  octopuses.add(new Octopus());
+    //}
     
     //Background Image
     background = loadImage("Images/Water Background.png");
