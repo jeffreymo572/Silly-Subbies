@@ -32,6 +32,13 @@ class Octopus {
   }
   
   void display() {
+<<<<<<< Updated upstream
+=======
+    // Debug - Collider check
+    rectMode(CORNERS);
+    rect(pos.x - collider.l_len, pos.y - collider.u_hei, pos.x + collider.r_len, pos.y + collider.d_hei);
+    
+>>>>>>> Stashed changes
     imageMode(CENTER);
     if (isRed){
       image(red, pos.x, pos.y, 100, 100);

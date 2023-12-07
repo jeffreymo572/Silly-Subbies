@@ -19,7 +19,6 @@ PImage background;
 boolean[] inputs = {false, false, false, false, false};
 
 void setup() {
-
     size(800, 600);
     submarine = new Submarine();
     bullets = new ArrayList<Bullet>();
@@ -29,6 +28,11 @@ void setup() {
     Gui = new GUI(highscore);
     paused = false;
     muted = false;
+    
+    //Spawn in initial octopuses
+    for (int i = 0; i < 15; i += 1){
+      octopuses.add(new Octopus());
+    }
     
     //Background Image
     background = loadImage("Images/Water Background.png");
@@ -91,7 +95,7 @@ void draw() {
 }
 
 void spawnOctopuses() {
-    if (random(1) >0.3){
+    if (random(1) > 0.3){
      octopuses.add(new Octopus());   
     }
     }
@@ -225,18 +229,67 @@ void playGame() {
     
     backgroundLayer();
     Layer4();
-    Layer3();
+    
+    
+    //Octopus and bullets
+  for (int i = bullets.size() - 1; i >= 0; i--) {
+        Bullet bullet = bullets.get(i);
+        bullet.update();
+        bullet.display();
+        
+        // Check for bullet-octopus collisions
+        for (int j = octopuses.size() - 1; j >= 0; j--) {
+            
+            Octopus octopus = octopuses.get(j);
+            if (bullet.hits(octopus)) {
+                bullets.remove(i);
+                octopuses.remove(j);
+                soundBoard.playHit();
+                score += 10;
+            }
+        }
+        // Remove bullets that go off-screen
+        if (bullet.offscreen()) {
+            bullets.remove(i);
+        }
+    }
+    
+  // Update and display octopuses
+    ArrayList<Octopus> octopusesCopy = new ArrayList<Octopus>();
+    //for (Octopus octopus : octopuses) {
+    for (int i = 0; i < octopuses.size(); i+= 1) {
+        Octopus octopus = octopuses.get(i); 
+        if (!octopus.offscreen()){
+         octopusesCopy.add(octopus);
+        }
+        octopus.update();
+        octopus.display();
+
+        // Check for submarine-octopus collisions
+        if (submarine.hits(octopus)) {
+            gameState = 2; // Switch to game over state
+        }
+    }
+    octopuses = octopusesCopy;
+    Gui.displayScore();
+    
+    // Check if all octopuses are eliminated
+    if (octopuses.size() <= 15) {
+        spawnOctopuses();
+    }
+    
+    
+    
     Layer2();
     Layer1();
     
-    //    // Check if submarine reached the end
-    //    if (submarine.x >= 850) {
-    //        gameState = 3; // Switch to level complete state
-    //    } else {
-    //        level++;
-    //        spawnOctopuses();
-    //    }
-    //}
+      //// Check if submarine reached the end
+      //if (submarine.pos.x >= 850) {
+      //    gameState = 3; // Switch to level complete state
+      //} else {
+      //    level++;
+      //    spawnOctopuses();
+      //}
     
 }
 
@@ -262,7 +315,6 @@ void Layer3(){
         bullet.update();
         bullet.display();
         
-        
         // Check for bullet-octopus collisions
         for (int j = octopuses.size() - 1; j >= 0; j--) {
             
@@ -283,7 +335,7 @@ void Layer3(){
   // Update and display octopuses
     ArrayList<Octopus> octopusesCopy = new ArrayList<Octopus>();
     for (Octopus octopus : octopuses) {
-        if (!octopus.offscreen()){ 
+        if (!octopus.offscreen()){
          octopusesCopy.add(octopus);
         } 
         octopus.update();
@@ -301,6 +353,7 @@ void Layer3(){
     if (octopuses.size() <= numEnemies) {
         spawnOctopuses();
     }
+
 }
 
 void Layer4(){
