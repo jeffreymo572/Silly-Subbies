@@ -11,8 +11,8 @@ class GUI{
       fill(255);
       textAlign(CENTER, CENTER);
       textSize(32);
-      text("Submarine Game", width/2, height/3);
-      text("highscore: " + highscore[0], width/2, height/3 +50);
+      text("Silly Subbies", width/2, height/3);
+      text("Highscore: " + highscore[0], width/2, height/3 +50);
       // Start button
       fill(0, 255, 0);
       rect(300, 400, 200, 50);
@@ -35,7 +35,7 @@ class GUI{
     textSize(24);
     text("Controls", width/2, height/4);
     textSize(18);
-    text("Use UP and DOWN arrow keys to move the submarine.", width/2, height/2 - 30);
+    text("Press WASD for up, left, down, and right.", width/2, height/2 - 30);
     text("Press SPACEBAR to shoot bullets and eliminate octopuses.", width/2, height/2 + 30);
     text("Press P to pause, and M to mute music.", width/2, height/2 + 90);
 
@@ -90,7 +90,7 @@ class GUI{
     fill(255);
     textSize(20);
     text("Score: " + score, 60, 30);
-    text("Distance: " + level, 60, 60);
+    text("Current High Score: " + score, 114, 60);
     // Check if all octopuses are eliminated
     if (octopuses.size() <= 5) {
         // Check if submarine reached the end

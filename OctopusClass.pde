@@ -32,10 +32,6 @@ class Octopus {
   }
   
   void display() {
-    // Debug - Collider check
-    //rectMode(CORNERS);
-    //rect(x - collider.l_len, y - collider.u_hei, x + collider.r_len, y + collider.d_hei);
-    
     imageMode(CENTER);
     if (isRed){
       image(red, pos.x, pos.y, 100, 100);

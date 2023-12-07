@@ -19,10 +19,13 @@ class Bullet {
   }
   
   void display() {
+<<<<<<< HEAD
     // Debug - Collider check
     //rectMode(CORNERS);
     //rect(pos.x - collider.l_len, pos.y - collider.u_hei, pos.x + collider.r_len, pos.y + collider.d_hei);
     
+=======
+>>>>>>> main
     imageMode(CENTER);
     image(torpedo, pos.x, pos.y, 25, 15); //x and y offsets for the submarine
   }

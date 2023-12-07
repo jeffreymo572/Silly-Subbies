@@ -4,6 +4,7 @@ ArrayList<Bullet> bullets;
 ArrayList<Octopus> octopuses;
 int score = 0;
 int level = 1;
+int numEnemies = 15;
 String[] highscore;
 GUI Gui;
 boolean paused, muted;
@@ -90,14 +91,9 @@ void draw() {
 }
 
 void spawnOctopuses() {
-    if (random(1) >0.3){
      octopuses.add(new Octopus());   
+
     }
-    //int numOctopuses = level * 5;
-    //for (int i = 0; i < numOctopuses; i++) {
-    //    octopuses.add(new Octopus());
-    //}
-}
 
 void move() {
     // move up
@@ -115,7 +111,7 @@ void move() {
         submarine.accel.x = 0.1;
         submarine.backward();
     }
-    //move right
+    //move forward
     if (inputs[3]) {
         submarine.accel.x = 0.015;
         submarine.forward();
@@ -221,6 +217,8 @@ void mousePressed() {
 }
 
 void playGame() {
+    //Background scroll functionality
+    backgroundScroll(background);
     move();
     submarine.update();
     
@@ -299,9 +297,10 @@ void Layer3(){
     Gui.displayScore();
     
     // Check if all octopuses are eliminated
-    if (octopuses.size() <= 15) {
+    if (octopuses.size() <= numEnemies) {
         spawnOctopuses();
     }
+<<<<<<< HEAD
 }
 
 void Layer4(){
@@ -316,6 +315,11 @@ void Layer4(){
 
 void backgroundLayer(){
   backgroundScroll(background);
+=======
+    if (score % 50 == 1){
+     numEnemies += 5;   
+    }
+>>>>>>> main
 }
 
 
