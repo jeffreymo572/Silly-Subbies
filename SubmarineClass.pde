@@ -4,7 +4,6 @@ class Submarine {
   float radius = 20; 
   PVector vel = new PVector(0,0);
   PVector accel = new PVector(0,0);
-  PVector fishCenter = new PVector(0,0);
   PImage[] subSprite = new PImage[11];
   int currentFrame = 0;
   int iterator = 1;
@@ -15,7 +14,6 @@ class Submarine {
   
   Submarine() {
     pos = new PVector(width/2, height/2);
-    fishCenter = pos.copy();
     
     for (int i = 0; i < subSprite.length; i++){
       String imageName = "Sprites/Player/SpriteImages/subAnimFrames-" + nf(i, 2) + ".png";
@@ -27,16 +25,13 @@ class Submarine {
    
     fishes = new Fish[numFish];
     for (int i = 0; i < numFish; i += 1){
-      fishes[i] = new Fish(fishCenter, 140, 100, 2, 2);
+      fishes[i] = new Fish(pos, 140, 100, 2, 2);
     }
   }
   
   void update() {
     pos.x = constrain(pos.x, 0, width - radius);
     pos.y = constrain(pos.y, 0, height - radius);
-    
-    fishCenter.x = pos.x;
-    fishCenter.y = pos.y;
     
     iterator = (iterator + 1) % 2;
     currentFrame = (currentFrame + iterator) % subSprite.length;
