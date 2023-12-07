@@ -11,6 +11,14 @@ class SoundBoard{
     this.win = win;
     this.zohit = zohit;
   }
+  
+  boolean isMenuPlaying(){
+    return this.menu.isPlaying();
+  }
+  
+  boolean isZohitPlaying(){
+    return this.zohit.isPlaying();
+  }
 
   // Menu Music
   void loopMenu(){
@@ -18,6 +26,11 @@ class SoundBoard{
       this.menu.play();
     }
   }
+  
+  void pauseMenu(){
+    this.menu.pause();
+  }
+  
   void stopMenu(){
     if (this.menu.isPlaying()){
       this.menu.stop();
@@ -28,6 +41,10 @@ class SoundBoard{
     if (!this.zohit.isPlaying()){
       this.zohit.play();
     }
+  }
+  
+  void pauseZohit(){
+    this.zohit.pause();
   }
 
   void stopZohit(){

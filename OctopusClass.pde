@@ -1,17 +1,18 @@
 class Octopus {
-  float x, y;
+  PVector pos;
   float speed = 4;
-  float radius = 15;
   boolean isRed = false;
   
   BoxCollider collider;
   
-  PImage orange = loadImage("Images/Enemy/enemy.png");  // Load the green light image
-  PImage red = loadImage("Images/Enemy/enemyBoss.png");  // Load the green light image
+  PImage orange = loadImage("Images/Enemy/enemy.png");
+  PImage red = loadImage("Images/Enemy/enemyBoss.png");
   
   Octopus() {
-    x = width + random(50, 850);
-    y = random(height);
+    float x = width + random(50, 850);
+    float y = random(height);
+    
+    pos = new PVector(x, y);
     
     if (random(0,2) >= 1){
       isRed = true;
@@ -19,32 +20,31 @@ class Octopus {
     }
     
     if (isRed){
-      collider = new BoxCollider(x, y, 30, 30, 20, 15);
+      collider = new BoxCollider(pos, 30, 30, 20, 15);
     } else {
-      collider = new BoxCollider(x, y, 25, 25, 17, 10);
+      collider = new BoxCollider(pos, 25, 25, 17, 10);
     }
     
   }
   
   void update() {
-    x -= speed;
-    collider.x = x;
+    pos.x -= speed;
   }
   
   void display() {
     // Debug - Collider check
-    rectMode(CORNERS);
-    rect(x - collider.l_len, y - collider.u_hei, x + collider.r_len, y + collider.d_hei);
+    //rectMode(CORNERS);
+    //rect(x - collider.l_len, y - collider.u_hei, x + collider.r_len, y + collider.d_hei);
     
     imageMode(CENTER);
     if (isRed){
-      image(red, x, y, 100, 100);
+      image(red, pos.x, pos.y, 100, 100);
     } else {
-      image(orange, x, y, 70, 70);
+      image(orange, pos.x, pos.y, 70, 70);
     }
     
   }
   boolean offscreen() {
-    return x > width;
+    return pos.x > width;
   }
 }
