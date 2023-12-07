@@ -91,8 +91,9 @@ void draw() {
 }
 
 void spawnOctopuses() {
+    if (random(1) >0.3){
      octopuses.add(new Octopus());   
-
+    }
     }
 
 void move() {
@@ -300,7 +301,6 @@ void Layer3(){
     if (octopuses.size() <= numEnemies) {
         spawnOctopuses();
     }
-<<<<<<< HEAD
 }
 
 void Layer4(){
@@ -315,11 +315,6 @@ void Layer4(){
 
 void backgroundLayer(){
   backgroundScroll(background);
-=======
-    if (score % 50 == 1){
-     numEnemies += 5;   
-    }
->>>>>>> main
 }
 
 

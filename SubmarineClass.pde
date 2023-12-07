@@ -70,11 +70,6 @@ class Submarine {
   }
   
   boolean hits(Octopus octopus) {
-<<<<<<< HEAD
     return collider.checkCollisionBox(octopus.collider);
-=======
-    float distance = dist(x, y, octopus.x, octopus.y);
-    return distance < radius + octopus.radius;
->>>>>>> main
   }
 }
