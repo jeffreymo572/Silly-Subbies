@@ -37,7 +37,7 @@ class GUI{
     textSize(18);
     text("Use UP and DOWN arrow keys to move the submarine.", width/2, height/2 - 30);
     text("Press SPACEBAR to shoot bullets and eliminate octopuses.", width/2, height/2 + 30);
-    text("Press P to paused", width/2, height/2 + 90);
+    text("Press P to pause, and M to mute music.", width/2, height/2 + 90);
 
     // Back button
     fill(255, 0, 0);
