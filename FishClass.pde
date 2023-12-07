@@ -2,16 +2,14 @@ class Fish {
     float alpha, beta, theta_0, x_w, y_w;
     PVector pos;
     PVector vel = new PVector(0, 0);
-    PVector force;
     
     boolean isBlue, firstLayer = false;
   
     PImage pink = loadImage("Images/Pink Fish.png");
     PImage blue = loadImage("Images/Blue Fish.png");
     
-    Fish(PVector pos, PVector force, float dx, float dy, float atheta, float btheta) {
+    Fish(PVector pos, float dx, float dy, float atheta, float btheta) {
       this.pos = pos;
-      this.force = force;
       x_w = random(0, dx);
       y_w = random(0, dy);
       
@@ -28,9 +26,9 @@ class Fish {
   void display() {
     imageMode(CENTER);
     if (isBlue){
-      image(blue, pos.x + (x_w * cos((alpha * frameCount / 60) + theta_0)) + force.x, pos.y + (y_w * sin((beta * frameCount / 60) + theta_0)) + force.y, 30, 30);
+      image(blue, pos.x + (x_w * cos((alpha * frameCount / 60) + theta_0)), pos.y + (y_w * sin((beta * frameCount / 60) + theta_0)), 30, 30);
     } else {
-      image(pink, pos.x + (x_w * cos((alpha * frameCount / 60) + theta_0)) + force.x, pos.y + (y_w * sin((beta * frameCount / 60) + theta_0)) + force.y, 25, 25);
+      image(pink, pos.x + (x_w * cos((alpha * frameCount / 60) + theta_0)), pos.y + (y_w * sin((beta * frameCount / 60) + theta_0)), 25, 25);
     }
   }
 }

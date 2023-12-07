@@ -32,6 +32,10 @@ class Octopus {
   }
   
   void display() {
+    // Debug - Collider check
+    //rectMode(CORNERS);
+    //rect(pos.x - collider.l_len, pos.y - collider.u_hei, pos.x + collider.r_len, pos.y + collider.d_hei);
+    
     imageMode(CENTER);
     if (isRed){
       image(red, pos.x, pos.y, 100, 100);
@@ -41,6 +45,6 @@ class Octopus {
     
   }
   boolean offscreen() {
-    return pos.x > width;
+    return pos.x < -50;
   }
 }

@@ -5,14 +5,12 @@ class Submarine {
   PVector vel = new PVector(0,0);
   PVector accel = new PVector(0,0);
   PVector fishCenter = new PVector(0,0);
-  PVector fishForce = new PVector(0,0);
   PImage[] subSprite = new PImage[11];
   int currentFrame = 0;
   int iterator = 1;
-  int logdamp = -1;
   int numFish = 12;
   
-  BoxCollider collider;
+  BoxCollider base_collider, peri_collider;
   Fish[] fishes;
   
   Submarine() {
@@ -24,11 +22,12 @@ class Submarine {
       subSprite[i] = loadImage(imageName);
     }
     
-    collider = new BoxCollider(pos, 55, 55, 20, 35);
+    base_collider = new BoxCollider(pos, 55, 55, 0, 35);
+    peri_collider = new BoxCollider(pos, 17, 30, 20, 0);
    
     fishes = new Fish[numFish];
     for (int i = 0; i < numFish; i += 1){
-      fishes[i] = new Fish(fishCenter, fishForce, 140, 100, 2, 2);
+      fishes[i] = new Fish(fishCenter, 140, 100, 2, 2);
     }
   }
   
@@ -46,7 +45,8 @@ class Submarine {
   void display() {
     // Debug - Collider check
     //rectMode(CORNERS);
-    //rect(pos.x - collider.l_len, pos.y - collider.u_hei, pos.x + collider.r_len, pos.y + collider.d_hei);
+    //rect(pos.x - base_collider.l_len, pos.y - base_collider.u_hei, pos.x + base_collider.r_len, pos.y + base_collider.d_hei);
+    //rect(pos.x - peri_collider.l_len, pos.y - peri_collider.u_hei, pos.x + peri_collider.r_len, pos.y + peri_collider.d_hei);
     
     imageMode(CENTER);
     image(subSprite[currentFrame], pos.x, pos.y, 120, 80);
@@ -70,6 +70,6 @@ class Submarine {
   }
   
   boolean hits(Octopus octopus) {
-    return collider.checkCollisionBox(octopus.collider);
+    return ( base_collider.checkCollisionBox(octopus.collider) || peri_collider.checkCollisionBox(octopus.collider) );
   }
 }

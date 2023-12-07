@@ -20,7 +20,7 @@ class Bullet {
   
   void display() {
     imageMode(CENTER);
-    image(torpedo, pos.x, pos.y, 25, 15); //x and y offsets for the submarine
+    image(torpedo, pos.x, pos.y, 25, 15);
   }
   
   boolean hits(Octopus octopus) {

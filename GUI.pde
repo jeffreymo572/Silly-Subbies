@@ -112,6 +112,7 @@ class GUI{
     
     // Paused Text
     text("Press P to unpause or click resume", width/2, height/2+30);
+    text("Press M (after resuming) to toggle music", width/2, height/2+60);
     
     // Resume button
     fill(255, 0, 0);
