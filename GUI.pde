@@ -37,7 +37,7 @@ class GUI{
     textSize(18);
     text("Press WASD for up, left, down, and right.", width/2, height/2 - 30);
     text("Press SPACEBAR to shoot bullets and eliminate octopuses.", width/2, height/2 + 30);
-    text("Press P to paused", width/2, height/2 + 90);
+    text("Press P to pause, and M to mute music.", width/2, height/2 + 90);
 
     // Back button
     fill(255, 0, 0);
@@ -94,9 +94,10 @@ class GUI{
     // Check if all octopuses are eliminated
     if (octopuses.size() <= 5) {
         // Check if submarine reached the end
-        if (submarine.x >= 850) {
+        if (submarine.pos.x >= 850) {
             gameState = 3; // Switch to level complete state
         } else {
+            level++;
             spawnOctopuses();
         }
     }

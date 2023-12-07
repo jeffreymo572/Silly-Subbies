@@ -1,30 +1,40 @@
 class Bullet {
-  float x, y;
+  //float x, y;
+  PVector pos;
   float speed = 10;
   float radius = 5; 
+  
+  BoxCollider collider;
   
   PImage torpedo = loadImage("Images/torpedo.png");
   
   Bullet(float x, float y) {
-    this.x = x;
-    this.y = y;
+    pos = new PVector(x, y);
+    
+    collider = new BoxCollider(pos, 12.5, 8, 7.5, 6);
   }
   
   void update() {
-    x += speed;
+    pos.x += speed;
   }
   
   void display() {
+<<<<<<< HEAD
+    // Debug - Collider check
+    //rectMode(CORNERS);
+    //rect(pos.x - collider.l_len, pos.y - collider.u_hei, pos.x + collider.r_len, pos.y + collider.d_hei);
+    
+=======
+>>>>>>> main
     imageMode(CENTER);
-    image(torpedo, x + 50, y + 30, 25, 15); //x and y offsets for the submarine
+    image(torpedo, pos.x, pos.y, 25, 15); //x and y offsets for the submarine
   }
   
   boolean hits(Octopus octopus) {
-    float distance = dist(x, y, octopus.x, octopus.y);
-    return distance < radius + octopus.radius;
+    return collider.checkCollisionBox(octopus.collider);
   }
   
   boolean offscreen() {
-    return x > width;
+    return pos.x > width;
   }
 }

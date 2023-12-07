@@ -7,7 +7,7 @@ int level = 1;
 int numEnemies = 15;
 String[] highscore;
 GUI Gui;
-boolean paused;
+boolean paused, muted;
 
 import processing.sound.*;
 SoundFile menu, fire, hit, death, win, zohit;
@@ -28,6 +28,7 @@ void setup() {
     spawnOctopuses();
     Gui = new GUI(highscore);
     paused = false;
+    muted = false;
     
     //Background Image
     background = loadImage("Images/Water Background.png");
@@ -46,21 +47,34 @@ void setup() {
 void draw() {
   if (gameState == 0) {
     Gui.displayHomeScreen();
-    soundBoard.loopMenu();
+    
+    if (muted){
+        if (soundBoard.isMenuPlaying()){
+          soundBoard.pauseMenu();
+        }
+      } else {
+        soundBoard.loopMenu();
+      }
   }
   // Game start
   else if (gameState == 1) {
     if (!(paused)){
       playGame();
       soundBoard.stopMenu();
-      soundBoard.loopZohit();
-    }
-    else{
+      
+      if (muted){
+        if (soundBoard.isZohitPlaying()){
+          soundBoard.pauseZohit();
+        }
+      } else {
+        soundBoard.loopZohit();
+      }
+    } else{
       Gui.displayPaused();
     }
 
     // Check if submarine reached the end
-    if (submarine.x >= 850) {
+    if (submarine.pos.x >= 850) {
         gameState = 0; // Switch to the home screen
         Gui.displayLevelComplete();
     }
@@ -104,7 +118,7 @@ void move() {
     }
     //shoot
     if (inputs[4]) {
-        bullets.add(new Bullet(submarine.x, submarine.y));
+        bullets.add(new Bullet(submarine.pos.x, submarine.pos.y));
         inputs[4] = !inputs[4];
     }
 }
@@ -125,9 +139,11 @@ void keyPressed() {
     if (key == ' ') {
       inputs[4] = true;
     }
-    
     if (key == 'p'){
       paused = !paused;
+    }
+    if (key == 'm'){
+      muted = !muted;
     }
 }
 
@@ -203,12 +219,44 @@ void mousePressed() {
 void playGame() {
     //Background scroll functionality
     backgroundScroll(background);
-    
-    
     move();
-    submarine.update();    
+    submarine.update();
+    
+    backgroundLayer();
+    Layer4();
+    Layer3();
+    Layer2();
+    Layer1();
+    
+    //    // Check if submarine reached the end
+    //    if (submarine.x >= 850) {
+    //        gameState = 3; // Switch to level complete state
+    //    } else {
+    //        level++;
+    //        spawnOctopuses();
+    //    }
+    //}
+    
+}
 
-    for (int i = bullets.size() - 1; i >= 0; i--) {
+void Layer1(){
+  //Front-most fish
+    for (int i = 0; i < submarine.numFish; i += 1){
+      Fish fish = submarine.fishes[i];
+      if (fish.firstLayer){
+        fish.display();
+      }
+    }
+}
+
+void Layer2(){
+  //Submarine
+  submarine.display();
+}
+
+void Layer3(){
+  //Octopus and bullets
+  for (int i = bullets.size() - 1; i >= 0; i--) {
         Bullet bullet = bullets.get(i);
         bullet.update();
         bullet.display();
@@ -231,9 +279,7 @@ void playGame() {
         }
     }
     
-    //Display Submarine after bullets
-    submarine.display();
-    // Update and display octopuses
+  // Update and display octopuses
     ArrayList<Octopus> octopusesCopy = new ArrayList<Octopus>();
     for (Octopus octopus : octopuses) {
         if (!octopus.offscreen()){ 
@@ -254,9 +300,26 @@ void playGame() {
     if (octopuses.size() <= numEnemies) {
         spawnOctopuses();
     }
+<<<<<<< HEAD
+}
+
+void Layer4(){
+  //Back-most fish
+  for (int i = 0; i < submarine.numFish; i += 1){
+      Fish fish = submarine.fishes[i];
+      if (!fish.firstLayer){
+        fish.display();
+      }
+    }
+}
+
+void backgroundLayer(){
+  backgroundScroll(background);
+=======
     if (score % 50 == 1){
      numEnemies += 5;   
     }
+>>>>>>> main
 }
 
 
